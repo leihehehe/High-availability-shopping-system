@@ -1,5 +1,5 @@
 # High-availability-shopping-system
-A high availability shopping system using SpringBoot, Kafka, Redis, MySQL and Mybatis.
+A high availability shopping system using SpringBoot, SpringCloud, Kafka, Redis, MySQL and Mybatis, Kubernetes.
 
 # Redis
 Redis is used as a cache in this project due to its high throughput. Compared to MySQL, it can take advantage of the reading speed as a cache. In my project, the Redis is responsible for storing deal and product information before the deal starts, then used to deal with a large number of requests for querying and updating deals. For instance, the Redis would be able to update the number of items held and the number of available items in stock, and it would limit the number of an item that one user could buy as well.
@@ -13,8 +13,11 @@ I used Kafka in this project to implement a message queue. Kafka is doing excell
 # CDN
 CDN(Content Delivery Network) was implemented for storing static resources so that users could access websites faster.
 
-# Spring Cloud
-TBC
+# Spring Cloud Microservices & resilience4j
+To be done
 
-# Design rational
-TBC
+# Docker & Kubernetes deployment
+To be done
+
+# Design rationale
+To be done
