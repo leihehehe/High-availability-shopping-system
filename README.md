@@ -18,13 +18,13 @@ A synchronized time counter could be achieved by getting the time difference fro
 CDN(Content Delivery Network) could be used for storing static resources so that users could access websites faster.
 
 # Spring Cloud Microservices & resilience4j
-Since I did not implement RESTful API for my project, microservices was not used. However, it is still a good choice if you do a pure bank-end application(RESTful API)
+Since I did not implement RESTful API for my project, microservices was not used. However, it is still a good choice if you do a pure back-end application(RESTful API)
 ## Why use resilience4j?
-- The downstream service may be down and the request will keep going to the down service, exhausting network resources and slowing performances.
+- The downstream service may be down and the request will keep going to the down service, exhausting network resources, and slowing performances.
 - Bad user experience
 - The failure of one service could cascade to other services throughout the whole application.
 
-In this project, **rate limiter** was used to limit the rate of accessing the website.
+In this project, the **rate limiter** was used to limit the rate of accessing the website.
 
 # Docker & Kubernetes deployment
 To be done
