@@ -4,6 +4,9 @@ import com.leih.shopping.db.dao.DealDao;
 import com.leih.shopping.db.dao.ProductDao;
 import com.leih.shopping.db.po.Deal;
 import com.leih.shopping.db.po.Product;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,15 +25,29 @@ public class DealController {
     DealDao dealDao;
     @Autowired
     ProductDao productDao;
+    Logger logger = LoggerFactory.getLogger(DealController.class);
     @GetMapping("/addDeal")
     public String addDeal(){
         return "add_deal";
     }
     @GetMapping("/")
+    @RateLimiter(name = "backendB", fallbackMethod = "getFallBack")
     public String dealList(Map<String,Object> resultMap){
         List<Deal> deals = dealDao.queryDealsByStatus(1);
         resultMap.put("deals",deals);
         return "index";
+    }
+
+
+    /***
+     * This method is to limit the rate
+     * @param throwable
+     * @return
+     */
+    @GetMapping
+    private String getFallBack(Throwable throwable) {
+        logger.info("exceed limit");
+        return "wait";
     }
 
     /***

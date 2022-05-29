@@ -16,7 +16,7 @@ import java.time.Duration;
 public class JedisConfig extends CachingConfigurerSupport {
     Logger logger = LoggerFactory.getLogger(JedisConfig.class);
     /**
-     * read configuration file(application.properties)
+     * read configuration file(application.yml)
      */
     @Value("${spring.redis.host}")
     private String host;
