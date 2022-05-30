@@ -1,8 +1,12 @@
 # High-availability-shopping-system
-A high availability shopping system using SpringBoot, resillience4j, Kafka, Redis and MySQL and Kubernetes.
+A high availability shopping system using SpringBoot, resillience4j, Kafka, Redis and MySQL.
 
 # Redis
 Redis is used as a cache in this project due to its high throughput. Compared to MySQL, it can take advantage of the reading speed as a cache. In my project, the Redis is responsible for storing deal and product information before the deal starts, then used to deal with a large number of requests for querying and updating deals. For instance, the Redis would be able to update the number of items held and the number of available items in stock, and it would limit the number of an item that one user could buy as well.
+
+Another usage is the locks in lua. I used `eval()` to execute the lua script, and the lua will be considered as a command which is atomic. For instance, we can execute Lua scripts in Redis to implement distributed locks. 
+
+https://redis.com/ebook/part-3-next-steps/chapter-11-scripting-redis-with-lua/11-2-rewriting-locks-and-semaphores-with-lua/11-2-1-why-locks-in-lua/
 
 # MySQL & Mybatis
 Mybatis is a framework supporting SQL for operating MySQL
@@ -26,8 +30,3 @@ Since I did not implement RESTful API for my project, microservices was not used
 
 In this project, the **rate limiter** was used to limit the rate of accessing the website.
 
-# Docker & Kubernetes deployment
-To be done
-
-# Design rationale
-To be done

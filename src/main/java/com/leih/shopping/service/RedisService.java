@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.params.SetParams;
 
 import java.util.Collections;
 
@@ -99,5 +100,36 @@ public class RedisService {
         Jedis jedisClient = jedisPool.getResource();
         jedisClient.srem("user_limits_deal_" + dealId, String.valueOf(userId));
         jedisClient.close();
+    }
+
+    /***
+     * Set redis distributed lock
+     * @param lockKey key
+     * @param requestId who wants to create this lock
+     * @param expireTime expire time
+     * @return true or false
+     */
+    public boolean setLock(String lockKey,String requestId, int expireTime) {
+        Jedis jedisClient = jedisPool.getResource();
+        //NX: if key no exist,then set otherwise do nothing
+        //PX: set expire time
+        SetParams setParams = SetParams.setParams().px(expireTime).nx();
+        String result = jedisClient.set(lockKey, requestId,setParams);
+        return "OK".equals(result);
+    }
+
+    /***
+     * remove lock
+     * @param lockKey lock key
+     * @param requestId who created this lock
+     * @return true or false
+     */
+    public boolean removeLock(String lockKey,String requestId){
+
+        Jedis jedisClient = jedisPool.getResource();
+        //check if the requestId stored in the redis equal to the requestId passed in.
+        String script = "if redis.call('get', KEYS[1] == ARGV[1] then return redis.call('del',KEYS[1]) else return 0 end)";
+        Long result = (Long) jedisClient.eval(script, Collections.singletonList(lockKey), Collections.singletonList(requestId));
+        return result == 1L;
     }
 }
