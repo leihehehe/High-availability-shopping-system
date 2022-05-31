@@ -1,0 +1,24 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: user_service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/shopping?serverTimezone=GMT&useUnicode=true&characterEncoding=utf8&useSSL=true
+    username: shopping
+    password: shopping
+  session:
+    store-type: none
+
+# MyBatis Mapper Config
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+eureka:
+  client:
+    fetch-registry: false
+    service-url:
+      #     register to another server to achieve high availability
+      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/
