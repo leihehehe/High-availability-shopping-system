@@ -31,6 +31,13 @@ resilience4j:
         failure-rate-threshold: 50
         minimum-number-of-calls: 5
         permitted-number-of-calls-in-half-open-state: 3
+  ratelimiter:
+    instances:
+      dealService:
+        register-health-indicator: true
+        limit-for-period: 5
+        limit-refresh-period: 3s
+        timeout-duration: 1
 management:
   health:
     circuitbreakers:

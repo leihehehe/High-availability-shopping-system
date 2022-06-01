@@ -44,8 +44,10 @@ Load Balancer would be used when using OpenFeign.
 To be done.
 
 ## resilience4j
-I used the circuit breaker to protect the upstream services when downstream services are down.
-I also used the rate limiter to limit the access rate from the clients so that the servers will not be crashed.
+I used the **Circuit Breaker** to protect the upstream services when downstream services are down.
+![img.png](images/circuitBreaker.png)
+I also used the **Rate Limiter** to limit the access rate from the clients so that the servers will not be crashed(e.g. simple implementation in the Deal Service).
+![img.png](images/rateLimiter.png)
 
 ### Why use resilience4j?
 - The downstream service may be down and the request will keep going to the downstream service, exhausting network resources, and slowing performances.

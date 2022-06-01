@@ -1,9 +1,11 @@
 package com.leih.dealservice.controller;
 
+import com.leih.commonutil.util.ReturnCode;
 import com.leih.dealservice.service.DealService;
 //import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import com.leih.commonutil.model.Deal;
 import com.leih.commonutil.model.Product;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,27 +29,27 @@ public class DealController {
         return "add_deal";
     }*/
     @GetMapping("/deal")
-//    @RateLimiter(name = "backendB", fallbackMethod = "getFallBack")
+    @RateLimiter(name = "dealService", fallbackMethod = "getFallBack")
     public ResultData<List<Deal>> dealList(){
 
         return ResultData.success(dealService.getDealByStatus(1));
     }
+    /***
+     * This method is to limit the rate
+     * @param exception
+     * @return
+     */
+    @GetMapping
+    private ResultData<List<Deal>> getFallBack(Exception exception) {
+        logger.info("exceed limit");
+        return ResultData.fail(ReturnCode.RC300.getCode(),"The system is busy");
+    }
+
     @GetMapping("/deal/{dealId}")
     public ResultData<Deal> getDeal(@PathVariable("dealId") long dealId){
         return ResultData.success(dealService.getDealById(dealId));
     }
 
-
- /*   *//***
-     * This method is to limit the rate
-     * @param throwable
-     * @return
-     *//*
-    @GetMapping
-    private String getFallBack(Throwable throwable) {
-        logger.info("exceed limit");
-        return null;
-    }*/
 
     /***
      * This method is used to add deal
