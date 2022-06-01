@@ -1,7 +1,7 @@
 package com.leih.productservice.dao;
 
+import com.leih.commonutil.model.Product;
 import com.leih.productservice.mapper.ProductMapper;
-import com.leih.productservice.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

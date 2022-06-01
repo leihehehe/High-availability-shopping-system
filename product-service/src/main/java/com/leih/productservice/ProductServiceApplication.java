@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @MapperScan(basePackages = {"com.leih.userservice.mapper"})
+@ComponentScan({"com.leih.productservice","com.leih.commonutil"})
 public class ProductServiceApplication {
 
     public static void main(String[] args) {

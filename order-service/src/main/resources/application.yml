@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: order_service
+    name: orderservice
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/shopping?serverTimezone=GMT&useUnicode=true&characterEncoding=utf8&useSSL=true
@@ -36,7 +36,21 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
 eureka:
   client:
-    fetch-registry: false
     service-url:
       #     register to another server to achieve high availability
-      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/
+      defaultZone: http://eureka1:8761/eureka/,http://eureka2:8762/eureka/
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      orderService:
+        register-health-indicator: true
+        event-consumer-buffer-size: 10
+        automatic-transition-from-open-to-half-open-enabled: true
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        permitted-number-of-calls-in-half-open-state: 3
+management:
+  health:
+    circuitbreakers:
+      enabled: true

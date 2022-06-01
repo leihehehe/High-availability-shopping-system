@@ -1,6 +1,6 @@
 package com.leih.dealservice.mapper;
 
-import com.leih.dealservice.model.Deal;
+import com.leih.commonutil.model.Deal;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

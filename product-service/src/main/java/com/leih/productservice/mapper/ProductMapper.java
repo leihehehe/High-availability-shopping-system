@@ -1,6 +1,6 @@
 package com.leih.productservice.mapper;
 
-import com.leih.productservice.model.Product;
+import com.leih.commonutil.model.Product;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

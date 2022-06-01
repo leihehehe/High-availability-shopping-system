@@ -1,22 +1,21 @@
 package com.leih.dealservice.controller;
 
-import com.leih.dealservice.model.Deal;
-import com.leih.dealservice.model.Product;
 import com.leih.dealservice.service.DealService;
 //import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import com.leih.commonutil.model.Deal;
+import com.leih.commonutil.model.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import com.leih.commonutil.util.ResultData;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class DealController {
@@ -29,9 +28,13 @@ public class DealController {
     }*/
     @GetMapping("/deal")
 //    @RateLimiter(name = "backendB", fallbackMethod = "getFallBack")
-    public List<Deal> dealList(){
+    public ResultData<List<Deal>> dealList(){
 
-        return dealService.getDealByStatus(1);
+        return ResultData.success(dealService.getDealByStatus(1));
+    }
+    @GetMapping("/deal/{dealId}")
+    public ResultData<Deal> getDeal(@PathVariable("dealId") long dealId){
+        return ResultData.success(dealService.getDealById(dealId));
     }
 
 
@@ -55,20 +58,18 @@ public class DealController {
      * @param dealQuantity
      * @param startTime
      * @param endTime
-     * @param resultMap
      * @return
      * @throws ParseException
      */
     @PostMapping("/deal/addDealAction")
-    public Deal addDealAction(
+    public ResultData<Deal> addDealAction(
             @RequestParam("name") String name,
             @RequestParam("productId") long productId,
             @RequestParam("originalPrice") BigDecimal originalPrice,
             @RequestParam("dealPrice") BigDecimal dealPrice,
             @RequestParam("dealQuantity") long dealQuantity,
             @RequestParam("startTime") String startTime,
-            @RequestParam("endTime") String endTime,
-            Map<String,Object> resultMap
+            @RequestParam("endTime") String endTime
 
     ) throws ParseException {
         startTime = startTime.substring(0, 10) +  startTime.substring(11);
@@ -87,12 +88,12 @@ public class DealController {
         deal.setEndTime(format.parse(endTime));
         //insert created deal into the database
         dealService.insertDeal(deal);
-        return deal;
+        return ResultData.success(deal);
     }
 
-    @GetMapping("/deal/{dealId}")
-    public Product getDealProduct(
-            @PathVariable("dealId") long dealId, ModelAndView modelAndView
+    @GetMapping("/deal/product/{dealId}")
+    public ResultData<Product> getDealProduct(
+            @PathVariable("dealId") long dealId
     ){
         return dealService.getProduct(dealId);
     }
@@ -104,25 +105,27 @@ public class DealController {
      */
     @ResponseBody
     @GetMapping("/deal/getSystemTime/{dealId}")
-    public String getSystemTime(@PathVariable("dealId") Long dealId){
+    public ResultData<String> getSystemTime(@PathVariable("dealId") Long dealId){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String date = simpleDateFormat.format(new Date());
 
-        return date;
+        return ResultData.success(date);
     }
 
-    @GetMapping("/deal/deductItem/{dealId}")
-    public boolean deductItem(@PathVariable("dealId") Long dealId){
-        return dealService.deductItemForDeal(dealId);
+    @DeleteMapping("/deal/deductItem/{dealId}")
+    public ResultData<Boolean> deductItem(@PathVariable("dealId") Long dealId){
+        boolean result = dealService.deductItemForDeal(dealId);
+        return ResultData.success(result);
     }
 
-    @GetMapping("/deal/lockItem/{dealId}")
-    public boolean lockItem(@PathVariable("dealId") Long dealId){
-        return dealService.lockItem(dealId);
+    @PutMapping("/deal/lockItem/{dealId}")
+    public ResultData<Boolean> lockItem(@PathVariable("dealId") Long dealId){
+        boolean result = dealService.lockItem(dealId);
+        return ResultData.success(result);
     }
-    @GetMapping("/deal/revertItem/{dealId}")
-    public String revertItem(@PathVariable("dealId") Long dealId){
+    @PutMapping("/deal/revertItem/{dealId}")
+    public ResultData<Object> revertItem(@PathVariable("dealId") Long dealId){
         dealService.revertItem(dealId);
-        return null;
+        return ResultData.success(null);
     }
 }

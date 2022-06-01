@@ -1,7 +1,7 @@
 package com.leih.dealservice.dao;
 
 import com.leih.dealservice.mapper.DealMapper;
-import com.leih.dealservice.model.Deal;
+import com.leih.commonutil.model.Deal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

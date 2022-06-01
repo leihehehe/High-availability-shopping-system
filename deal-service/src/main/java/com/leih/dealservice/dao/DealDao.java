@@ -1,6 +1,6 @@
 package com.leih.dealservice.dao;
 
-import com.leih.dealservice.model.Deal;
+import com.leih.commonutil.model.Deal;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.leih.orderservice.mapper;
 
-import com.leih.orderservice.model.Order;
+import com.leih.commonutil.model.Order;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

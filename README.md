@@ -29,25 +29,28 @@ I used two Spring Cloud **Eureka** servers as a registry to manage address for m
 
 ## Spring Cloud Gateway
 
-To be done.
+>Spring Cloud Gateway provides a flexible way of routing requests based on a number of criteria, as well as focuses on cross-cutting concerns such as security, resiliency, and monitoring.
+
+Since I haven't implemented any authentication parts, In this project, the Spring Cloud Gateway are mainly responsible for routing.
 
 ## OpenFeign
 
-Going to change RestTemplate to OpenFeign.
+Microservices are communicating with each other using OpenFeign tech. OpenFeign-related classes are in the `common-util` package.
+
+Load Balancer would be used when using OpenFeign.
 
 ## Sluth & ZipKin
 
 To be done.
 
 ## resilience4j
-To Do - circuit breaker, rate limiter, etc.
+I used the circuit breaker to protect the upstream services when downstream services are down.
+I also used the rate limiter to limit the access rate from the clients so that the servers will not be crashed.
 
 ### Why use resilience4j?
-- The downstream service may be down and the request will keep going to the down service, exhausting network resources, and slowing performances.
+- The downstream service may be down and the request will keep going to the downstream service, exhausting network resources, and slowing performances.
 - Bad user experience
 - The failure of one service could cascade to other services throughout the whole application.
-
-In this project, the **rate limiter** was used to limit the rate of accessing the website.
 
 # Front End - React
 

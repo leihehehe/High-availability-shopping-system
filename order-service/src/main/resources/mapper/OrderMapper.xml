@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.leih.orderservice.mapper.OrderMapper">
-  <resultMap id="BaseResultMap" type="com.leih.orderservice.model.Order">
+  <resultMap id="BaseResultMap" type="com.leih.commonutil.model.Order">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
     <result column="order_status" jdbcType="INTEGER" property="orderStatus" />
@@ -24,7 +24,7 @@
     delete from `order`
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.leih.orderservice.model.Order">
+  <insert id="insert" parameterType="com.leih.commonutil.model.Order">
     insert into `order` (id, order_no, order_status,
       deal_id, user_id, order_amount, 
       create_time, payment_time)
@@ -32,7 +32,7 @@
       #{dealId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{orderAmount,jdbcType=DECIMAL}, 
       #{createTime,jdbcType=TIMESTAMP}, #{paymentTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.leih.orderservice.model.Order">
+  <insert id="insertSelective" parameterType="com.leih.commonutil.model.Order">
     insert into `order`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -87,7 +87,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.leih.orderservice.model.Order">
+  <update id="updateByPrimaryKeySelective" parameterType="com.leih.commonutil.model.Order">
     update `order`
     <set>
       <if test="orderNo != null">
@@ -114,7 +114,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.leih.orderservice.model.Order">
+  <update id="updateByPrimaryKey" parameterType="com.leih.commonutil.model.Order">
     update `order`
     set order_no = #{orderNo,jdbcType=VARCHAR},
       order_status = #{orderStatus,jdbcType=INTEGER},

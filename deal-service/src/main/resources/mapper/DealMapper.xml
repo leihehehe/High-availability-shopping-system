@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.leih.dealservice.mapper.DealMapper">
-  <resultMap id="BaseResultMap" type="com.leih.dealservice.model.Deal">
+  <resultMap id="BaseResultMap" type="com.leih.commonutil.model.Deal">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="product_id" jdbcType="BIGINT" property="productId" />
@@ -28,7 +28,7 @@
     delete from deal
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.leih.dealservice.model.Deal">
+  <insert id="insert" parameterType="com.leih.commonutil.model.Deal">
     insert into deal (id, name, product_id, 
       original_price, deal_price, deal_status, 
       start_time, end_time, total_stock, 
@@ -38,7 +38,7 @@
       #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{totalStock,jdbcType=BIGINT}, 
       #{availableStock,jdbcType=INTEGER}, #{lockStock,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.leih.dealservice.model.Deal">
+  <insert id="insertSelective" parameterType="com.leih.commonutil.model.Deal">
     insert into deal
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -111,7 +111,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.leih.dealservice.model.Deal">
+  <update id="updateByPrimaryKeySelective" parameterType="com.leih.commonutil.model.Deal">
     update deal
     <set>
       <if test="name != null">
@@ -147,7 +147,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.leih.dealservice.model.Deal">
+  <update id="updateByPrimaryKey" parameterType="com.leih.commonutil.model.Deal">
     update deal
     set name = #{name,jdbcType=VARCHAR},
       product_id = #{productId,jdbcType=BIGINT},

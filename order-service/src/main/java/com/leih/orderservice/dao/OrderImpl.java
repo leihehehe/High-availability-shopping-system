@@ -1,7 +1,7 @@
 package com.leih.orderservice.dao;
 
 import com.leih.orderservice.mapper.OrderMapper;
-import com.leih.orderservice.model.Order;
+import com.leih.commonutil.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

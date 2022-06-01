@@ -1,6 +1,6 @@
 package com.leih.orderservice.dao;
 
-import com.leih.orderservice.model.Order;
+import com.leih.commonutil.model.Order;
 
 public interface OrderDao {
     Order queryOrder(String orderNo);

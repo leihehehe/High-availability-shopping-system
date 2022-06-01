@@ -1,11 +1,16 @@
 package com.leih.dealservice.service;
 
+import com.leih.commonutil.api.ProductApi;
+import com.leih.commonutil.util.ReturnCode;
 import com.leih.dealservice.dao.DealDao;
-import com.leih.dealservice.model.Deal;
-import com.leih.dealservice.model.Product;
+import com.leih.commonutil.model.Deal;
+import com.leih.commonutil.model.Product;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import com.leih.commonutil.util.ResultData;
 
 import java.util.List;
 
@@ -14,7 +19,8 @@ public class DealService {
     @Autowired
     DealDao dealDao;
     @Autowired
-    RestTemplate restTemplate;
+    ProductApi productApi;
+    Logger logger = LoggerFactory.getLogger(DealService.class);
     public Deal getDealById(long dealId){
         return dealDao.queryDealById(dealId);
     }
@@ -24,11 +30,17 @@ public class DealService {
     public void insertDeal(Deal deal){
         dealDao.insertDeal(deal);
     }
-    public Product getProduct(long dealId){
-        Deal deal = getDealById(dealId);
 
-        String url = "http://localhost:8086/product/"+deal.getProductId();
-        return restTemplate.getForObject(url,Product.class);
+    @CircuitBreaker(name = "dealService",fallbackMethod = "serviceDownFallBack")
+    public ResultData<Product> getProduct(long dealId){
+        Deal deal = getDealById(dealId);
+        ResultData<Product> resultData = productApi.getProduct(deal.getProductId());
+        return resultData;
+    }
+
+    public ResultData<Product> serviceDownFallBack(Exception exception){
+        logger.info("product service is down");
+        return ResultData.fail(ReturnCode.RC500.getCode(),"The system is down");
     }
     public List<Deal> getDealByStatus(int activityStatus){
         return dealDao.queryDealsByStatus(activityStatus);

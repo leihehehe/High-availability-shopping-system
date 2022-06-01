@@ -1,20 +1,20 @@
 spring:
   application:
-    name: eureka-server01
+    name: eurekaserver
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/shopping?serverTimezone=GMT&useUnicode=true&characterEncoding=utf8&useSSL=true
     username: shopping
     password: shopping
-
 server:
   port: 8761
 eureka:
   instance:
-    hostname: localhost
+    # changed hosts file in the computer
+    hostname: eureka1
   client:
-    register-with-eureka: false
-    fetch-registry: false
     service-url:
       #     register to another server to achieve high availability
-      defaultZone: http://localhost:8762/eureka/
+      defaultZone: http://eureka2:8762/eureka/
+    registerWithEureka: true
+    fetchRegistry: true

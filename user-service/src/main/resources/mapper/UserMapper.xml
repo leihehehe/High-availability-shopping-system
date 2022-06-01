@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.leih.userservice.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="com.leih.userservice.model.User">
+  <resultMap id="BaseResultMap" type="com.leih.commonutil.model.User">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="address" jdbcType="VARCHAR" property="address" />
@@ -20,13 +20,13 @@
     delete from user
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.leih.userservice.model.User">
+  <insert id="insert" parameterType="com.leih.commonutil.model.User">
     insert into user (id, user_name, address, 
       phone)
     values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.leih.userservice.model.User">
+  <insert id="insertSelective" parameterType="com.leih.commonutil.model.User">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -57,7 +57,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.leih.userservice.model.User">
+  <update id="updateByPrimaryKeySelective" parameterType="com.leih.commonutil.model.User">
     update user
     <set>
       <if test="userName != null">
@@ -72,7 +72,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.leih.userservice.model.User">
+  <update id="updateByPrimaryKey" parameterType="com.leih.commonutil.model.User">
     update user
     set user_name = #{userName,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
