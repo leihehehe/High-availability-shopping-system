@@ -1,0 +1,62 @@
+server:
+  port: 10010
+
+spring:
+  application:
+    name: gateway
+  session:
+    store-type: none
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    jedis:
+      pool:
+        max-active: 200
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+    timeout: 0
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      routes:
+        - id: deal-service
+          uri: lb://dealservice
+          predicates:
+            - Path=/deal/**
+        - id: order-service
+          uri: lb://orderservice
+          predicates:
+            - Path=/order/**
+        - id: product-service
+          uri: lb://productservice
+          predicates:
+            - Path=/product/**
+        - id: user-service
+          uri: lb://userservice
+          predicates:
+            - Path=/user/**
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:4200"
+            allowedMethods:
+              - "GET"
+              - "POST"
+              - "DELETE"
+              - "PUT"
+              - "OPTIONS"
+            allowedHeaders: "*"
+            allowCredentials: true
+            max-age: 360000
+        # option request could be sent from the browser
+        add-to-simple-url-handler-mapping: true
+eureka:
+  client:
+    service-url:
+      #     register to another server to achieve high availability
+      defaultZone: http://eureka1:8761/eureka/,http://eureka2:8762/eureka/
+    fetch-registry: true
