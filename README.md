@@ -1,5 +1,5 @@
 # High-availability-shopping-system
-A high availability shopping(e-commerce) system with high concurrency using SpringBoot, Spring Cloud(Microservices architecture), Spring Cloud Gateway, resillience4j, Openfeign, Spring Security, RabbitMQ, Redis, Bloom Filter and MySQL.
+A high availability shopping(e-commerce) system with high concurrency using SpringBoot, Spring Cloud(Microservices architecture), Spring Cloud Gateway, MySQL, resillience4j, Openfeign, Spring Security, RabbitMQ, Redis, Bloom Filter, Zipkin, Sleuth.
 # Main Functions shown on the website
 
 - **User Login**
@@ -76,6 +76,8 @@ I used two Spring Cloud **Eureka** servers as a registry to manage address for m
 
 Since I haven't implemented any authentication parts, In this project, the Spring Cloud Gateway are mainly responsible for routing and implementing a CORS policy.
 
+Moreover, inner APIs were prevented to be accessed from clients using Spring Cloud Gateway.
+
 ## OpenFeign
 
 Microservices are communicating with each other using OpenFeign tech.
@@ -85,9 +87,12 @@ Load Balancer would be used when using OpenFeign (registered by Eureka servers).
 ## Spring Security
 Used Spring Security to authenticate users(admin), and protect inner APIs being accessed by clients.
 
-## Sluth & ZipKin
+## Sleuth & ZipKin
 
-To be done.
+>Zipkin and Sleuth allow us to aggregate and track log entries as requests move through a distributed software system
+
+![img.png](images/zipkin.png)
+
 
 ## resilience4j
 I used the **Circuit Breaker** to protect the upstream services when downstream services are down.
