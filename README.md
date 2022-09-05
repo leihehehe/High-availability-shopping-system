@@ -1,5 +1,5 @@
 # High-availability-shopping-system
-A high availability shopping(e-commerce) system with high concurrency using SpringBoot, Spring Cloud(Microservices architecture), Spring Cloud Gateway, MySQL, resillience4j, Openfeign, Spring Security, RabbitMQ, Redis, Bloom Filter, Zipkin, Sleuth.
+A high availability shopping(e-commerce) system with high concurrency using SpringBoot, Spring Cloud(Microservices architecture), Spring Cloud Gateway, MySQL, resillience4j, Openfeign, Spring Security, RabbitMQ, Redis, Bloom Filter, Zipkin and Sleuth.
 # Main Functions shown on the website
 
 - **User Login**
