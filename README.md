@@ -34,11 +34,11 @@ https://redis.com/ebook/part-3-next-steps/chapter-11-scripting-redis-with-lua/11
 
 In this project, keys in Redis are set to expire in 20 minutes, and expired or non-existent keys will be reset when checking the stock.
 
-### Redis potential issues and solutions
+### Redis potential issues and solutions used in the project
 #### Cache Breakdown
 The key of a hot product expired, a large number of query requests for this product come into the database, and there would be a concurrency problem.
 
-**Solution**: Use the **Redis distributed lock(Lua script)**.
+**Solution**: Using the **Redis distributed lock(Lua script)**.
 
 #### Cache Penetration
 A large number of requests for non-existent keys (not in Redis and MySQL) may make MySQL crash.
