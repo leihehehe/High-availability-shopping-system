@@ -35,7 +35,7 @@ public class AuthenticationConverter implements ServerAuthenticationConverter {
         Jedis resource = jedisPool.getResource();
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getURI().getPath();
-        //inner api are not able to called.
+        //inner APIs are not able to called.
         if(matcher.match("/api/**/inner/**",path)){
             return Mono.just(new UsernamePasswordAuthenticationToken(null, null));
         }
@@ -43,7 +43,7 @@ public class AuthenticationConverter implements ServerAuthenticationConverter {
         if(matcher.match("/user/login",path)){
             return Mono.just(new UsernamePasswordAuthenticationToken(null, null,null));
         }
-        //all the requests that are not accessing admin page, just make then pass.
+        //all the requests that are not accessing admin page, just make them pass.
         if(!matcher.match("/user/**",path)){
             return Mono.just(new UsernamePasswordAuthenticationToken(null, null,null));
         }
